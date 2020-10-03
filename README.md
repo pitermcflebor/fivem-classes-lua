@@ -8,7 +8,8 @@
 ## How to use it
 - Go to any of your resources where you want to use this
 - Import the classes needed
-Example on your fxmanifest.lua
+
+Example on your fxmanifest.lua:
 ```
 fx_version 'cerulean'
 games { 'gta5' }
