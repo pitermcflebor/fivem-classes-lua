@@ -1,10 +1,34 @@
 
+--[[
+
+Player - Class
+
+Init: Player(
+	source		-- number
+)
+
+Player - methods
+
+Player:GetPosition()
+@return Coords object
+
+Player:IsInVehicle()
+@return boolean
+
+Player:GetVehicleSitting()
+@return Vehicle object
+
+Player:GetLastVehicle()
+@return Vehicle object
+
+]]
+
 _G.Player = setmetatable({}, {
 	__tonumber = function(self)
 		return self.source
 	end,
 	__tostring = function(self)
-		return ('Player<%s>'):format(table.concat({self.source, self.name}, ', '))
+		return ('Player<%s>'):format(table.concat({'id: '..self.source, 'name: '..self.name}, ', '))
 	end,
 	__type = 'player',
 	__call = function(self, source)
@@ -28,8 +52,16 @@ function Player:GetPosition()
 	return Coords(GetEntityCoords(self.ped.id), GetEntityHeading(self.ped.id))
 end
 
+function Player:IsInVehicle()
+	return IsPedSittingInAnyVehicle(self.ped.id)
+end
+
 function Player:GetVehicleSitting()
-	return Vehicle(false, GetVehiclePedIsIn(self.ped.id, false))
+	if self:IsInVehicle() then
+		return Vehicle(false, GetVehiclePedIsIn(self.ped.id, false))
+	else
+		return nil
+	end
 end
 
 function Player:GetLastVehicle()

@@ -1,4 +1,34 @@
 
+--
+-- Coords - class
+--
+-- Init: Coords(
+--		x --[[ number ]],
+--		y --[[ number ]], 
+--		z --[[ number ]], 
+--		w --[[ number ]]
+--	)
+-- All parameters are optional
+--
+-- Example:
+--
+-- local myCoords = Coords(35.645, 16.234, 76.912)
+--
+--
+-- Coords - methods
+--
+-- void Coords:UpdateX(x --[[ number ]])
+-- void Coords:UpdateY(y --[[ number ]])
+-- void Coords:UpdateZ(z --[[ number ]])
+-- void Coords:UpdateW(w --[[ number ]])
+--
+-- Coords - Additonal methods
+--
+-- local x, y, z, w = table.unpack(myCoords)
+-- local x, y, z, w = myCoords.xyzw
+-- local x, y = myCoords.xy
+--
+
 _G.Coords = setmetatable({}, {
 	__tonumber = function(self)
 		return self.x, self.y, self.z
@@ -20,6 +50,9 @@ _G.Coords = setmetatable({}, {
 		if k == 'xyzw' then
 			return self.x, self.y, self.z, self.w
 		end
+	end,
+	__unpack = function(self)
+		return self.x, self.y, self.z, self.w
 	end,
 	__call = function(self, ...)
 		local params = {...}
@@ -71,3 +104,43 @@ _G.Coords = setmetatable({}, {
 		return self
 	end
 })
+
+function Coords:UpdateX(v)
+	if math.type(v) == 'float' then
+		self.x = v
+	elseif math.type(v) == 'integer' then
+		self.x = v + 0.0
+	else
+		warning('The new X need to be an integer or a float, not a '..type(v))
+	end
+end
+
+function Coords:UpdateY(v)
+	if math.type(v) == 'float' then
+		self.y = v
+	elseif math.type(v) == 'integer' then
+		self.y = v + 0.0
+	else
+		warning('The new Y need to be an integer or a float, not a '..type(v))
+	end
+end
+
+function Coords:UpdateZ(v)
+	if math.type(v) == 'float' then
+		self.z = v
+	elseif math.type(v) == 'integer' then
+		self.z = v + 0.0
+	else
+		warning('The new Z need to be an integer or a float, not a '..type(v))
+	end
+end
+
+function Coords:UpdateW(v)
+	if math.type(v) == 'float' then
+		self.w = v
+	elseif math.type(v) == 'integer' then
+		self.w = v + 0.0
+	else
+		warning('The new W need to be an integer or a float, not a '..type(v))
+	end
+end

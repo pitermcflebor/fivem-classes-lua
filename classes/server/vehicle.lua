@@ -1,4 +1,44 @@
 
+--[[
+
+Vehicle - Class
+
+Init: Vehicle(
+	newVehicle 	-- boolean,
+	p1 			-- number,
+	x			-- number,
+	y			-- number,
+	z			-- number,
+	heading		-- number,
+	isNetwork	-- boolean
+)
+
+* if newVehicle is true, p1 will be the vehicle model hash
+* if newVehicle is false, p1 will be the vehicle entity id
+
+Vehicle - methods
+
+Vehicle:Exists()
+@return boolean
+
+void Vehicle:Delete() or Vehicle:Remove()
+@raise error if entity not exists
+
+void Vehicle:Freeze([ms])
+@raise error if entity not exists
+
+Vehicle:GetPosition()
+@raise error if entity not exists
+@return Coords object
+
+void Vehicle:SetPedInside(ped[, seat])
+@raise error if entity not exists
+
+void Vehicle:EveryoneLeave()
+@raise error if entity not exists
+
+]]
+
 _G.Vehicle = setmetatable({}, {
 	__tonumber = function(self)
 		return self.id
@@ -87,7 +127,8 @@ function Vehicle:GetPosition()
 	if not self:Exists() then
 		warning('Vehicle doesn\'t exists!')
 	end
-	return GetEntityCoords(self.id)
+	local x,y,z = GetEntityCoords(self.id)
+	return Coords(x,y,z)
 end
 
 function Vehicle:SetPedInside(ped, seat)
