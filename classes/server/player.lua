@@ -3,27 +3,27 @@
 
 Player - Class
 
-Init: Player(
+Init: CPlayer(
 	source		-- number
 )
 
 Player - methods
 
-Player:GetPosition()
+CPlayer:GetPosition()
 @return Coords object
 
-Player:IsInVehicle()
+CPlayer:IsInVehicle()
 @return boolean
 
-Player:GetVehicleSitting()
+CPlayer:GetVehicleSitting()
 @return Vehicle object
 
-Player:GetLastVehicle()
+CPlayer:GetLastVehicle()
 @return Vehicle object
 
 ]]
 
-_G.Player = setmetatable({}, {
+_G.CPlayer = setmetatable({}, {
 	__tonumber = function(self)
 		return self.source
 	end,
@@ -48,26 +48,18 @@ _G.Player = setmetatable({}, {
 	end
 })
 
-function Player:GetPosition()
+function CPlayer:GetPosition()
 	return Coords(GetEntityCoords(self.ped.id), GetEntityHeading(self.ped.id))
 end
 
-function Player:IsInVehicle()
-	return IsPedSittingInAnyVehicle(self.ped.id)
+function CPlayer:IsInsideVehicle()
+	return self.ped:IsInsideVehicle()
 end
 
-function Player:GetVehicleSitting()
-	if self:IsInVehicle() then
-		return Vehicle(false, GetVehiclePedIsIn(self.ped.id, false))
+function CPlayer:GetVehicle(last)
+	if self:IsInsideVehicle() then
+		return self.ped:GetVehicle(last)
 	else
 		return nil
 	end
-end
-
-function Player:GetLastVehicle()
-	local lastVeh = GetVehiclePedIsIn(self.ped.id, true)
-	if lastVeh ~= nil or lastVeh ~= 0 then
-		return Vehicle(false, lastVeh)
-	end
-	return nil
 end

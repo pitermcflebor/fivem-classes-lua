@@ -28,7 +28,7 @@ _G.Ped = setmetatable({}, {
 		return self.id
 	end,
 	__tostring = function(self)
-		return ('Ped<%s>'):format(table.concat({self.id, self.modelName}, ', '))
+		return ('Ped<%s>'):format(table.concat({self.id, (self.modelName or self.model)}, ', '))
 	end,
 	__type = 'Ped',
 	__call = function(self, newPed, p1, pedType, x, y, z, heading, isNetwork)
@@ -58,6 +58,7 @@ _G.Ped = setmetatable({}, {
 			end
 			self.model = GetHashKey(p1)
 			self.id = CreatePed(pedType, self.model, x, y, z, heading, isNetwork, true)
+			return self
 		elseif newPed == false then
 			if type(p1) == 'number' then
 				if DoesEntityExist(p1) then
@@ -88,4 +89,24 @@ function Ped:GetPosition()
 	local x,y,z = GetEntityCoords(self.id)
 	local heading = GetEntityHeading(self.id)
 	return Coords(x,y,z,heading)
+end
+
+function Ped:IsInsideVehicle(last)
+	if not self:Exists() then
+		warning('The Ped doesn\'t exists!')
+		return
+	end
+	return GetVehiclePedIsIn(self.id, last or false) ~= 0
+end
+
+function Ped:GetVehicle(last)
+	if not self:Exists() then
+		warning('The Ped doesn\'t exists!')
+		return
+	end
+	if not self:IsInsideVehicle(last) then
+		warning('The Ped isn\'t in inside vehicle!')
+		return
+	end
+	return Vehicle(false, GetVehiclePedIsIn(self.id, last or false))
 end

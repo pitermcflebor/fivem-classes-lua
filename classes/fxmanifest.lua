@@ -14,6 +14,10 @@ client_scripts {
     'client/vehicle.lua',
     'client/ped.lua',
     'client/player.lua',
+    'client/marker.lua',
+    -- end here ↑↑
+
+    'misc/client/props.lua',
 }
 
 server_scripts {

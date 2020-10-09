@@ -57,13 +57,31 @@ end
 function CPlayer:GetPosition()
 	if not self:Exists() then
 		warning('The Player Ped doesn\'t exists!')
+	else
+		return self.ped:GetPosition()
 	end
-	return self.ped:GetPosition()
 end
 
 function CPlayer:GetName()
 	if not self:Exists() then
 		warning('The Player Ped doesn\'t exists!')
+	else
+		return GetPlayerName(self.id)
 	end
-	return GetPlayerName(self.id)
+end
+
+function CPlayer:IsInsideVehicle()
+	if not self:Exists() then
+		warning('The Player Ped doesn\'t exists!')
+	else
+		return self.ped:IsInsideVehicle()
+	end
+end
+
+function CPlayer:GetVehicle(last)
+	if not self:Exists() then
+		warning('The Player Ped doesn\'t exists!')
+	else
+		return self.ped:GetVehicle(last)
+	end
 end

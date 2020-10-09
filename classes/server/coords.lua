@@ -31,7 +31,7 @@
 
 _G.Coords = setmetatable({}, {
 	__tonumber = function(self)
-		return self.x, self.y, self.z
+		return vec(self.x, self.y, self.z)
 	end,
 	__tostring = function(self)
 		return ("Coords<%s>"):format(table.concat({'X: '..self.x, 'Y: '..self.y, 'Z: '..self.z, 'W: '..self.w}, ', '))

@@ -19,7 +19,11 @@ Init: Ped(
 
 Ped - methods
 
+Ped:Exists()
+@return boolean
 
+Ped:GetPosition()
+@return Coords object
 
 ]]
 
@@ -80,4 +84,20 @@ function Ped:GetPosition()
 	local coords = GetEntityCoords(self.id)
 	local heading = GetEntityHeading(self.id)
 	return Coords(coords.x, coords.y, coords.z, heading)
+end
+
+function Ped:IsInsideVehicle()
+	if not self:Exists() then
+		warning('The Ped doesn\'t exists!')
+		return
+	end
+	return IsPedSittingInAnyVehicle(self.id)
+end
+
+function Ped:GetVehicle(last)
+	if not self:Exists() then
+		warning('The Ped doesn\'t exists!')
+		return
+	end
+	return GetVehiclePedIsIn(self.id, last or false)
 end

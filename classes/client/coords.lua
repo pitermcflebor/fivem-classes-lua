@@ -31,12 +31,12 @@
 
 _G.Coords = setmetatable({}, {
 	__tonumber = function(self)
-		return self.x, self.y, self.z
+		return vec(self.x, self.y, self.z)
 	end,
 	__tostring = function(self)
 		return ("Coords<%s>"):format(table.concat({'X: '..self.x, 'Y: '..self.y, 'Z: '..self.z, 'W: '..self.w}, ', '))
 	end,
-	__type = 'coords',
+	__type = 'Coords',
 	__index = function(self, k)
 		if k == 'x' or k == 'y' or k == 'z' or k == 'w' or k == 'heading' then
 			return self[k]
@@ -53,6 +53,9 @@ _G.Coords = setmetatable({}, {
 	end,
 	__unpack = function(self)
 		return self.x, self.y, self.z, self.w
+	end,
+	__pack = function(self)
+		return {x=self.x, y=self.y, z=self.z, w=self.w}
 	end,
 	__call = function(self, ...)
 		local params = {...}

@@ -42,3 +42,24 @@ _G.RegisterClientCallback = function(eventName, fn)
 		warning('The event name expected string, but got %s', type(eventName))
 	end
 end
+
+_G.ShowHelpNotification = function(msg, thisFrame, beep, duration)
+	AddTextEntry('help_notification', msg)
+	if thisFrame then
+		DisplayHelpTextThisFrame('help_notification', false)
+	else
+		BeginTextCommandDisplayHelp('help_notification')
+		EndTextCommandDisplayHelp(0, false, beep == nil and true or beep, duration or -1)
+	end
+
+	msg, thisFrame, beep, duration = nil, nil, nil, nil
+end
+
+_G.ShowNotification = function(msg, flash, saveToBrief, hudColorIndex)
+	AddTextEntry('notification', msg)
+	BeginTextCommandThefeedPost('notification')
+	if hudColorIndex then ThefeedNextPostBackgroundColor(hudColorIndex) end
+	EndTextCommandThefeedPostTicker(flash or false, saveToBrief or true)
+
+	msg, hudColorIndex, flash, saveToBrief = nil, nil, nil, nil
+end
