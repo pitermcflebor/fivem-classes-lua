@@ -1,4 +1,4 @@
-# Lua classes / types for Lua
+# Lua classes / types for FiveM
 
 ## Installation
 - First download the code
