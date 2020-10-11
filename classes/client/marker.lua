@@ -71,80 +71,94 @@ Marker:Outside(function)
 
 ]]
 
-_G.Marker = setmetatable({}, {
-	__call = function(self, markerType, pos, radius, r, g, b, alpha, reserved)
-		if type(markerType) == 'number' and math.type(markerType) == 'integer' then
-			if markerType < 0 then assert(nil, 'markerType can\'t be lower than 0') end
-			if markerType > 65 then assert(nil, 'markerType can\'t be greater than 64') end
-			if _type(pos) == 'Coords' then
-				if type(radius) == 'number' then
-					if type(r) == 'number' and type(g) == 'number' and type(b) == 'number' and type(alpha) == 'number' then
-						self.id = CreateCheckpoint(markerType, pos.x+(radius/2), pos.y+(radius/2), pos.z, pos.x-(radius/2), pos.y-(radius/2), pos.z, radius, r, g, b, alpha, (reserved or 0))
-						self.coords = pos
-						self.markerType = markerType
-						self.reserved = reserved
-						self.radius = radius
-						return self
-					else
-						assert(nil, 'r, g, b or alpha wasn\'t a number!')
-					end
+_G.Marker = {}
+
+MarkerMethods = {}
+
+-- init
+MarkerMethods.__call = function(self, markerType, pos, radius, r, g, b, alpha, reserved)
+	local o = setmetatable({}, {
+		__index = self
+	})
+	if type(markerType) == 'number' and math.type(markerType) == 'integer' then
+		if markerType < 0 then assert(nil, 'markerType can\'t be lower than 0') end
+		if markerType > 65 then assert(nil, 'markerType can\'t be greater than 64') end
+		if _type(pos) == 'Coords' then
+			if type(radius) == 'number' then
+				if type(r) == 'number' and type(g) == 'number' and type(b) == 'number' and type(alpha) == 'number' then
+					o.id = CreateCheckpoint(markerType, pos.x+(radius/2), pos.y+(radius/2), pos.z, pos.x-(radius/2), pos.y-(radius/2), pos.z, radius, r, g, b, alpha, (reserved or 0))
+					o.coords = pos
+					o.markerType = markerType
+					o.reserved = reserved
+					o.radius = radius
+					return o
 				else
-					assert(nil, 'radius parameter needed number, but got '..type(radius))
+					assert(nil, 'r, g, b or alpha wasn\'t a number!')
 				end
 			else
-				assert(nil, 'pos parameter needed Coords, but got '..type(pos1))
+				assert(nil, 'radius parameter needed number, but got '..type(radius))
 			end
 		else
-			assert(nil, 'markerType parameter needed number (integer), but got '..type(markerType))
+			assert(nil, 'pos parameter needed Coords, but got '..type(pos1))
 		end
+	else
+		assert(nil, 'markerType parameter needed number (integer), but got '..type(markerType))
 	end
-})
-
-function Marker:Delete()
-	DeleteCheckpoint(self.id)
-	self.threadWorking = false
 end
 
-function Marker:SetCylinderHeight(nearHeight, farHeight, radius)
-	SetCheckpointCylinderHeight(self.id, nearHeight, farHeight, radius)
-end
+-- methods
+MarkerMethods.__index = {
+	Delete = function(self)
+		DeleteCheckpoint(self.id)
+		self.threadWorking = false
+	end,
 
-function Marker:SetIconRgba(red, green, blue, alpha)
-	SetCheckpointIconRgba(self.id, red, green, blue, alpha)
-end
+	SetCylinderHeight = function(self, nearHeight, farHeight, radius)
+		SetCheckpointCylinderHeight(self.id, nearHeight, farHeight, radius)
+	end,
 
-function Marker:SetRgba(red, green, blue, alpha)
-	SetCheckpointRgba(self.id, red, green, blue, alpha)
-end
+	SetIconRgba = function(self, red, green, blue, alpha)
+		SetCheckpointIconRgba(self.id, red, green, blue, alpha)
+	end,
 
-function Marker:SetScale(p0)
-	SetCheckpointScale(self.id, p0)
-end
+	SetRgba = function(self, red, green, blue, alpha)
+		SetCheckpointRgba(self.id, red, green, blue, alpha)
+	end,
 
-function Marker:Inside(cb)
-	self.threadWorking = true
-	self.inside = false
-	CreateThread(function()
-		while self.threadWorking do
-			if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) <= self.radius*1.5 then
-				if not self.inside then self.inside = true end
-				cb(self)
-			else
-				if self.inside then collectgarbage("collect") end
+	SetScale = function(self, p0)
+		SetCheckpointScale(self.id, p0)
+	end,
+
+	Inside = function(self, cb)
+		self.threadWorking = true
+		self.inside = false
+		print('created inside at', tostring(self.coords))
+		Citizen.CreateThreadNow(function()
+			print('started while at', tostring(self.coords))
+			while self.threadWorking do
+				if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) <= self.radius*1.5 then
+					if not self.inside then self.inside = true end
+					cb(self)
+				else
+					if self.inside then collectgarbage("collect") end
+				end
+				Wait(0)
 			end
-			Wait(0)
-		end
-	end)
-end
+		end)
+	end,
 
-function Marker:Outside(cb)
-	self.threadWorking = true
-	CreateThread(function()
-		while self.threadWorking do
-			if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) > self.radius*1.5 then
-				cb(self)
+	Outside = function(self, cb)
+		self.threadWorking = true
+		Citizen.CreateThreadNow(function()
+			while self.threadWorking do
+				if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) > self.radius*1.5 then
+					cb(self)
+				end
+				Wait(0)
 			end
-			Wait(0)
-		end
-	end)
-end
+		end)
+	end
+}
+
+-- class
+setmetatable(Marker, MarkerMethods)

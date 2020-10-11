@@ -15,6 +15,7 @@ client_scripts {
     'client/ped.lua',
     'client/player.lua',
     'client/marker.lua',
+    'client/test.lua',
     -- end here ↑↑
 
     'misc/client/props.lua',
