@@ -6,6 +6,7 @@ version '1.0'
 description 'Classes for FiveM with Lua'
 
 client_scripts {
+    'misc/client/main.lua',
     'misc/client/callbacks.lua',
 
     -- @importable scripts ↓
@@ -15,14 +16,18 @@ client_scripts {
     'client/ped.lua',
     'client/player.lua',
     'client/marker.lua',
-    'client/test.lua',
+    'client/exports.lua',
+    'client/statebags.lua',
     -- end here ↑↑
 
     'misc/client/props.lua',
+    'misc/client/states.lua',
 }
 
 server_scripts {
+    'misc/server/main.lua',
     'misc/server/callbacks.lua',
+    'misc/server/states.lua',
 
     -- @importable scripts ↓
     'server/utils.lua',
@@ -30,4 +35,5 @@ server_scripts {
     'server/ped.lua',
     'server/player.lua',
     'server/vehicle.lua',
+    'server/statebags.lua',
 }

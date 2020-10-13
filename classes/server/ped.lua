@@ -101,7 +101,8 @@ PedMethods.__index = {
 			warning('The Ped doesn\'t exists!')
 			return
 		end
-		return GetVehiclePedIsIn(self.id, last or false) ~= 0
+		local v = GetVehiclePedIsIn(self.id, last or false) ~= 0
+		return v
 	end,
 
 	GetVehicle = function(self, last)

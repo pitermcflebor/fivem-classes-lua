@@ -54,11 +54,21 @@ end
 
 PlayerMethods.__index = {
 	GetPosition = function(self)
-		return Coords(GetEntityCoords(self.ped.id), GetEntityHeading(self.ped.id))
+		if self.ped ~= nil then
+			return Coords(GetEntityCoords(self.ped.id), GetEntityHeading(self.ped.id))
+		else
+			warning('Player Ped doesn\'t exists!')
+			return nil
+		end
 	end,
 
 	IsInsideVehicle = function(self)
-		return self.ped:IsInsideVehicle()
+		if self.ped ~= nil then
+			return self.ped:IsInsideVehicle()
+		else
+			warning('Player Ped doesn\'t exists!')
+			return false
+		end
 	end,
 
 	GetVehicle = function(self, last)

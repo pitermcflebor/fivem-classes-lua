@@ -104,7 +104,7 @@ PedMethods.__index = {
 			warning('The Ped doesn\'t exists!')
 			return
 		end
-		return GetVehiclePedIsIn(self.id, last or false)
+		return Vehicle(false, GetVehiclePedIsIn(self.id, last or false))
 	end,
 }
 
