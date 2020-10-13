@@ -63,13 +63,11 @@ PedMethods.__call = function(self, newPed, p1, pedType, x, y, z, heading, isNetw
 		end
 		o.model = GetHashKey(p1)
 		o.id = CreatePed(pedType, o.model, x, y, z, heading, isNetwork, true)
-		return o
 	elseif newPed == false then
 		if type(p1) == 'number' then
 			if DoesEntityExist(p1) then
 				o.id = p1
 				o.model = GetEntityModel(p1)
-				return o
 			else
 				assert(nil, 'The entity doesn\'t exists')
 			end
@@ -79,6 +77,8 @@ PedMethods.__call = function(self, newPed, p1, pedType, x, y, z, heading, isNetw
 	elseif type(newPed) ~= 'boolean' then
 		assert(nil, 'First paremeter expected boolean, but got '..type(newPed))
 	end
+	o.state = StateBag(o.id)
+	return o
 end
 
 PedMethods.__index = {

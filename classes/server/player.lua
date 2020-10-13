@@ -46,10 +46,11 @@ PlayerMethods.__call = function(self, source)
 		o.ped = Ped(false, NetworkGetEntityFromNetworkId(o.source))
 		o.name = GetPlayerName(o.source)
 		o.identifiers = identifiers
-		return o
 	else
 		assert(nil, 'Source expected number, but got '..type(source))
 	end
+	o.state = o.ped.state
+	return o
 end
 
 PlayerMethods.__index = {

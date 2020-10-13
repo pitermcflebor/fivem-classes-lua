@@ -71,13 +71,11 @@ VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwo
 			assert(nil, 'isNetwork expected boolean')
 		end
 		o.id = CreateVehicle(o.model, x, y, z, heading, isNetwork, true)
-		return o
 	elseif newVehicle == false then
 		if type(p1) == 'number' then
 			if DoesEntityExist(p1) then
 				o.id = p1
 				o.model = GetEntityModel(p1)
-				return o
 			else
 				assert(nil, 'The entity passed doesn\'t exists!')
 			end
@@ -87,6 +85,8 @@ VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwo
 	elseif type(newVehicle) ~= 'boolean' then
 		assert(nil, 'First paremeter expected boolean, but got '..type(newVehicle))
 	end
+	o.state = StateBag(o.id)
+	return o
 end
 
 VehicleMethods.__index = {
@@ -137,6 +137,7 @@ VehicleMethods.__index = {
 					Wait(ms)
 					if self.freezed == true then
 						FreezeEntityPosition(self.id, false)
+						self.freezed = false
 					end
 				end)
 			end

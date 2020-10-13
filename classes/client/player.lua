@@ -37,20 +37,20 @@ PlayerMethods.__call = function(self, source)
 		o.ped = Ped(false, PlayerPedId())
 		o.serverId = GetPlayerServerId(o.id)
 		o.source = o.serverId
-		return o
 	elseif type(source) == 'number' and source > 0 then
 		o.serverId = source
 		o.id = GetPlayerFromServerId(o.serverId)
 		if NetworkIsPlayerActive(o.id) then
 			o.ped = Ped(false, GetPlayerPed(o.id))
 			o.source = o.serverId
-			return o
 		else
 			warning('The Player %s doesn\'t exists!', source)
 		end
 	else
 		warning('The paremeter need to be number, but got '..type(source))
 	end
+	o.state = o.ped.state
+	return o
 end
 
 PlayerMethods.__index = {

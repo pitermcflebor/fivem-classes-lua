@@ -79,8 +79,6 @@ VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwo
 				if type(p1) == 'string' then o.modelName = p1 end
 
 				o.id = CreateVehicle(o.model, x, y, z, heading, isNetwork, true)
-
-				return o
 			else
 				assert(nil, 'The model '..p1..' doesn\'t exists!')
 			end
@@ -94,14 +92,14 @@ VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwo
 			end
 			o.id = p1
 			o.model = GetEntityModel(p1)
-
-			return o
 		else
 			assert(nil, 'The entity passed doesn\t exists')
 		end
 	elseif type(newVehicle) ~= 'boolean' then
 		assert(nil, 'First parameter was '..type(newVehicle)..', expected boolean')
 	end
+	o.state = StateBag(o.id)
+	return o
 end
 
 VehicleMethods.__index = {

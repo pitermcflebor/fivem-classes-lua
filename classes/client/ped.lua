@@ -55,7 +55,6 @@ PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
 			if type(p1) == 'string' then o.modelName = p1 end
 			o.model = GetHashKey(p1)
 			o.id = CreatePed(pedType, o.model, x, y, z, w, isNetwork, true)
-			return o
 		else
 			assert(nil, 'The second parameter expected number, but got '..type(p1))
 		end
@@ -64,7 +63,6 @@ PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
 			if DoesEntityExist(p1) then
 				o.id = p1
 				o.model = GetEntityModel(o.id)
-				return o
 			else
 				assert(nil, 'The entity doesn\'t exists!')
 			end
@@ -74,6 +72,8 @@ PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
 	elseif type(newPed) ~= 'boolean' then
 		assert(nil, 'First parameter expected boolean, but got '..type(newPed))
 	end
+	o.state = StateBag(o.id)
+	return o
 end
 
 PedMethods.__index = {
