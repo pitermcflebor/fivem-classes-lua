@@ -1,13 +1,7 @@
 # Lua classes / types for FiveM
 
-## Installation
-- First download the code
-- Add to your resources folder this script named `classes`
-- Everything is done!
-
-## How to use it
-- Go to any of your resources where you want to use this
-- Import the classes needed
+## Documentation [WIP]
+https://pitermcflebor.github.io/
 
 Example on your fxmanifest.lua:
 ```
