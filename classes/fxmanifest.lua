@@ -10,6 +10,7 @@ client_scripts {
 	'misc/client/callbacks.lua',
 
 	-- @importable scripts ↓
+	'common/utils.lua',
 	'client/utils.lua',
 	'client/coords.lua',
 	'client/statebag.lua',
@@ -30,6 +31,7 @@ server_scripts {
 	'misc/server/states.lua',
 
 	-- @importable scripts ↓
+	'common/utils.lua',
 	'server/utils.lua',
 	'server/coords.lua',
 	'server/statebag.lua',

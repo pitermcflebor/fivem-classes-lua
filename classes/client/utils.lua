@@ -63,3 +63,25 @@ _G.ShowNotification = function(msg, flash, saveToBrief, hudColorIndex)
 
 	msg, hudColorIndex, flash, saveToBrief = nil, nil, nil, nil
 end
+
+TimeoutRequestModel = function(model)
+	local _model = (type(model) == 'string' and GetHashKey(model) or model)
+	if HasModelLoaded(_model) then
+		return true
+	else
+		RequestModel(_model)
+		local now = GetGameTimer()
+		repeat
+			Wait(1)
+			if (GetGameTimer() - now) >= 500 then
+				warning('Timeout requesting model %s after 500ms', model)
+				timedout = true
+				break
+			end
+		until (HasModelLoaded(_model))
+		if timedout then
+			return false
+		end
+		return true
+	end
+end

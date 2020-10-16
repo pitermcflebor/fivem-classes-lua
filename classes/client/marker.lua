@@ -15,15 +15,15 @@ Checkpoint types:
 42-44-------- Cylinder w/ number (uses 'reserved' parameter)
 * changing reserved value:
 	- 0-99 numbers
-	- 100-109 arrow + number
-	- 110-119 double arrow + number
-	- 120-129 triple arrow + number
-	- 130-139 ground big circle + number
-	- 140-149 cycle + number
-	- 150-159 ground slim circle + number
-	- 160-169 ground circle with arrow + number
-	- 170-179 ground circle with spaces + number
-	- 180-189 world sphere + number
+	- 100-109 arrow
+	- 110-119 double arrow
+	- 120-129 triple arrow
+	- 130-139 ground big circle
+	- 140-149 cycle
+	- 150-159 ground slim circle
+	- 160-169 ground circle with arrow
+	- 170-179 ground circle with spaces
+	- 180-189 world sphere
 	- 190-199 dollar
 	- 200-209 lines
 	- 210-219 wolf

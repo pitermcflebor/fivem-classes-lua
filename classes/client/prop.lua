@@ -104,6 +104,22 @@ PropMethods.__index = {
 		end
 		return true
 	end,
+
+	GetPosition = function(self)
+		return Coords(GetEntityCoords(self.id), GetEntityHeading(self.id))
+	end,
+
+	SwapModel = function(self, newModel)
+		local pos = self:GetPosition()
+		self.swapModel = (type(newModel) == 'string' and GetHashKey(newModel) or newModel)
+		if not IsModelInCdimage(self.swapModel) then
+			warning('Model %s isn\'t on Cdimage!', self.swapModel)
+		else
+			TimeoutRequestModel(self.swapModel)
+			CreateModelSwap(pos.x, pos.y, pos.z, 1.0, self.model, self.swapModel, false)
+			self.model = self.swapModel
+		end
+	end,
 }
 
 setmetatable(Prop, PropMethods)

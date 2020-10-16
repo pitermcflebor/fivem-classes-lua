@@ -108,6 +108,34 @@ PropMethods.__index = {
 		end
 		return true
 	end,
+
+	GetPosition = function(self)
+		if self:Exists() then
+			return Coords(GetEntityCoords(self.id), GetEntityHeading(self.id))
+		end
+	end,
+
+	SetPosition = function(self, newCoords)
+		if self:Exists() then
+			local cPos = self:GetPosition()
+			local xAxis = 
+			SetEntityCoords(self.id, (newCoords.x or cPos.x), (newCoords.y or cPos.y), (newCoords.z or cPos.z), 0, 0, 0, false)
+		end
+	end,
+
+	SwapModel = function(self, newModel)
+		if not self.swapped then
+			self.swapped = true
+			self.swapModel = (type(newModel) == 'string' and GetHashKey(newModel) or newModel)
+			TriggerClientEvent('__classes:client:model:swap', -1, self:GetNetId(), self.model, self.swapModel)
+		elseif self.swapped == true then
+			local _newModel = (type(newModel) == 'string' and GetHashKey(newModel) or newModel)
+			if _newModel ~= self.swapModel then
+				self.swapModel = _newModel
+				TriggerClientEvent('__classes:client:model:swap', -1, self:GetNetId(), self.model, self.swapModel)
+			end
+		end
+	end,
 }
 
 setmetatable(Prop, PropMethods)

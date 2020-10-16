@@ -43,13 +43,17 @@ PlayerMethods.__call = function(self, source)
 			assert(nil, 'Source doesn\'t exists')
 		end
 		o.source = source
-		o.ped = Ped(false, NetworkGetEntityFromNetworkId(o.source))
+		o.ped = Ped(false, GetPlayerPed(o.source))
 		o.name = GetPlayerName(o.source)
-		o.identifiers = identifiers
+		o.identifiers = {}
+		for _,identifier in pairs(identifiers) do
+			local splitted = table.build(identifier:split(':'))
+			o.identifiers[splitted[1]] = identifier
+		end
 	else
 		assert(nil, 'Source expected number, but got '..type(source))
 	end
-	o.state = o.ped.state
+	o.state = StateBag(o.source, true)
 	return o
 end
 

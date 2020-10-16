@@ -65,12 +65,11 @@ PedMethods.__call = function(self, newPed, p1, pedType, x, y, z, heading, isNetw
 		o.id = CreatePed(pedType, o.model, x, y, z, heading, isNetwork, true)
 	elseif newPed == false then
 		if type(p1) == 'number' then
-			if DoesEntityExist(p1) then
-				o.id = p1
-				o.model = GetEntityModel(p1)
-			else
-				assert(nil, 'The entity doesn\'t exists')
+			if not DoesEntityExist(p1) then
+				warning('Created a Ped class to a non-existent entity, is that ok?')
 			end
+			o.id = p1
+			o.model = GetEntityModel(p1)
 		else
 			assert(nil, 'Second parameter expected number, but got '..type(newPed))
 		end

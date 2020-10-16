@@ -34,6 +34,21 @@ CoordsMethods = {}
 
 -- methods
 CoordsMethods.__index = {
+	AddBlip = function(self, spriteId, shortRange, blipName, scale, color, alpha)
+		self.blip = AddBlipForCoord(self.x, self.y, self.z)
+		SetBlipSprite(self.blip, spriteId)
+		SetBlipColour(self.blip, color or 0)
+		SetBlipAlpha(self.blip, alpha or 255)
+		SetBlipScale(self.blip, scale or 1.0)
+		SetBlipAsShortRange(self.blip, shortRange or false)
+		if blipName then
+			AddTextComponentSubstringBlipName(self.blip)
+			BeginTextCommandSetBlipName(blipName)
+			EndTextCommandSetBlipName(self.blip)
+		end
+		return self.blip
+	end,
+
 	UpdateX = function(self, v)
 		if math.type(v) == 'float' then
 			self.x = v

@@ -11,11 +11,18 @@ _G.StateBag = {}
 _G.StateBagMethods = {}
 
 
-StateBagMethods.__call = function(self, entityId)
+StateBagMethods.__call = function(self, entityId, isPlayer)
 	if type(entityId) == 'number' then
 		local o = setmetatable({}, {__index = self})
-		o.localId = entityId
-		o.id = NetworkGetNetworkIdFromEntity(entityId)
+		if isPlayer ~= nil and isPlayer == true then
+			o.id = entityId
+		else
+			o.localId = entityId
+			if not DoesEntityExist(entityId) then
+				warning('The entity you are trying to set StateBag doesn\'t exists! Maybe a onesync issue?')
+			end
+			o.id = NetworkGetNetworkIdFromEntity(entityId)
+		end
 		return o
 	else
 		error("The entityId expected number, but got "..type(entityId))
