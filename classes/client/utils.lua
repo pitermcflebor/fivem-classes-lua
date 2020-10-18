@@ -56,7 +56,7 @@ _G.ShowHelpNotification = function(msg, thisFrame, beep, duration)
 end
 
 _G.ShowNotification = function(msg, flash, saveToBrief, hudColorIndex)
-	AddTextEntry('notification', msg)
+	AddTextEntry(GetCurrentResourceName()..':notification:'..GetGameTimer(), msg)
 	BeginTextCommandThefeedPost('notification')
 	if hudColorIndex then ThefeedNextPostBackgroundColor(hudColorIndex) end
 	EndTextCommandThefeedPostTicker(flash or false, saveToBrief or true)
@@ -73,8 +73,8 @@ TimeoutRequestModel = function(model)
 		local now = GetGameTimer()
 		repeat
 			Wait(1)
-			if (GetGameTimer() - now) >= 500 then
-				warning('Timeout requesting model %s after 500ms', model)
+			if (GetGameTimer() - now) >= 20000 then
+				warning('Timeout requesting model "%s" after 20 seconds', model)
 				timedout = true
 				break
 			end
@@ -83,5 +83,30 @@ TimeoutRequestModel = function(model)
 			return false
 		end
 		return true
+	end
+end
+
+TimeoutRequestAnim = function(animDict)
+	if type(animDict) == 'string' then
+		if HasAnimDictLoaded(animDict) then
+			return true
+		end
+		RequestAnimDict(animDict)
+		local now = GetGameTimer()
+		repeat
+			Wait(1)
+			if (GetGameTimer() - now) >= 20000 then
+				warning('Timeout requesting anim "%s" after 20 seconds', animDict)
+				timedout = true
+				break
+			end
+		until (HasAnimDictLoaded(animDict))
+		if timedout then
+			return false
+		end
+		return true
+	else
+		warning('Tried to TimeoutRequestAnim without string!')
+		return false
 	end
 end

@@ -36,6 +36,9 @@ CoordsMethods = {}
 CoordsMethods.__index = {
 	AddBlip = function(self, spriteId, shortRange, blipName, scale, color, alpha)
 		self.blip = AddBlipForCoord(self.x, self.y, self.z)
+		if type(spriteId) ~= 'number' then
+			assert(nil, 'The spriteId wasn\'t a number.')
+		end
 		SetBlipSprite(self.blip, spriteId)
 		SetBlipColour(self.blip, color or 0)
 		SetBlipAlpha(self.blip, alpha or 255)

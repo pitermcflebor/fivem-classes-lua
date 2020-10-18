@@ -89,6 +89,24 @@ PlayerMethods.__index = {
 			return self.ped:GetVehicle(last)
 		end
 	end,
+
+	PlayAnim = function(self, ...)
+		if self:Exists() then
+			return self.ped:PlayAnim(...)
+		end
+	end,
+
+	StartScenario = function(self, ...)
+		if self:Exists() then
+			return self.ped:StartScenario(...)
+		end
+	end,
+
+	ClearTasks = function(self)
+		if self:Exists() then
+			return self.ped:ClearTasks()
+		end
+	end
 }
 
 setmetatable(CPlayer, PlayerMethods)

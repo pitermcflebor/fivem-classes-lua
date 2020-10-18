@@ -106,6 +106,43 @@ PedMethods.__index = {
 		end
 		return Vehicle(false, GetVehiclePedIsIn(self.id, last or false))
 	end,
+
+	PlayAnim = function(self, animDict, animName, flag, duration, blendInSpeed, blendOutSpeed, playbackRate, lockX, lockY, lockZ)
+		if not self:Exists() then
+			warning('The Ped doesn\'t exists!')
+			return
+		end
+		if animDict == nil or type(animDict) ~= 'string' then warning('The animDict wasn\'t string!'); return end
+		if animName == nil or type(animName) ~= 'string' then warning('The animName wasn\'t string!'); return end
+		if TimeoutRequestAnim(animDict) then
+			TaskPlayAnim(self.id, animDict, animName, blendInSpeed or 8.0, blendOutSpeed or 8.0, duration or -1, flag or -1, playbackRate or 0, lockX or false, lockY or false, lockZ or false)
+			while not IsEntityPlayingAnim(self.id, animDict, animName, flag or -1) do Wait(0) end
+			return true
+		else
+			return false
+		end
+	end,
+
+	StartScenario = function(self, scenarioName, playEnterAnim)
+		if not self:Exists() then
+			warning('The Ped doesn\'t exists!')
+			return
+		end
+		if scenarioName == nil or type(scenarioName) ~= 'string' then warning('The scenarioName wasn\'t string!'); return end
+		if IsScenarioTypeEnabled(scenarioName) then
+			TaskStartScenarioInPlace(self.id, scenarioName, 0, playEnterAnim or true)
+			while not IsPedUsingScenario(self.id, scenarioName) do Wait(0) end
+			return true
+		else
+			return false
+		end
+	end,
+
+	ClearTasks = function(self)
+		if self:Exists() then
+			ClearPedTasks(self.id)
+		end
+	end
 }
 
 setmetatable(Ped, PedMethods)

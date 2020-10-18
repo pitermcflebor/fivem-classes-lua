@@ -86,7 +86,7 @@ MarkerMethods.__call = function(self, markerType, pos, radius, r, g, b, alpha, r
 		if _type(pos) == 'Coords' then
 			if type(radius) == 'number' then
 				if type(r) == 'number' and type(g) == 'number' and type(b) == 'number' and type(alpha) == 'number' then
-					o.id = CreateCheckpoint(markerType, pos.x+(radius/2), pos.y+(radius/2), pos.z, pos.x-(radius/2), pos.y-(radius/2), pos.z, radius, r, g, b, alpha, (reserved or 0))
+					o.id = CreateCheckpoint(markerType, pos.x, pos.y, pos.z, pos.x, pos.y, pos.z, radius, r, g, b, alpha, (reserved or 0))
 					o.coords = pos
 					o.markerType = markerType
 					o.reserved = reserved
@@ -132,9 +132,7 @@ MarkerMethods.__index = {
 	Inside = function(self, cb)
 		self.threadWorking = true
 		self.inside = false
-		print('created inside at', tostring(self.coords))
 		Citizen.CreateThreadNow(function()
-			print('started while at', tostring(self.coords))
 			while self.threadWorking do
 				if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) <= self.radius*1.5 then
 					if not self.inside then self.inside = true end
