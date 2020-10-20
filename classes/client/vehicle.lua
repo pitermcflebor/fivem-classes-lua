@@ -107,6 +107,12 @@ VehicleMethods.__index = {
 		return (DoesEntityExist(self.id) == 1 and true or false)
 	end,
 
+	GetNetId = function(self)
+		if self:Exists() then
+			return NetworkGetNetworkIdFromEntity(self.id)
+		end
+	end,
+
 	SetPedInside = function(self, ped, seat)
 		if DoesEntityExist(self.id) then
 			if _type(ped) == 'number' then
@@ -132,10 +138,6 @@ VehicleMethods.__index = {
 
 	GetMods = function(self)
 		if self:Exists() then
-			--[[ local neonColor = {}
-			neonColor.r,
-			neonColor.g,
-			neonColor.b 			= GetVehicleNeonLightsColour(self.id) ]]
 			return {
 				MOD_SPOILER = {modType=GetVehicleMod(self.id, 0), index=0},
 				MOD_FRONTBUMPER = {modType=GetVehicleMod(self.id, 1), index=1},
@@ -323,7 +325,10 @@ VehicleMethods.__index = {
 	GetBrokenWindows = function(self)
 		local windows = {}
 		for i=0, 14, 1 do
-			table.insert(windows, {index=i, broken=(not IsVehicleWindowIntact(self.id, i))})
+			local run, result = pcall(IsVehicleWindowIntact, self.id, i)
+			if run then
+				table.insert(windows, {index=i, broken=(not result)})
+			end
 		end
 		return windows
 	end,
@@ -430,6 +435,39 @@ VehicleMethods.__index = {
 		end
 	end,
 
+	IsDoorOpen = function(self, doorIndex)
+		if self:Exists() then
+			return GetVehicleDoorAngleRatio(self.id, doorIndex) > 0.0
+		end
+	end,
+
+	SetDoorOpen = function(self, doorIndex, loose, openInstantly)
+		if self:Exists() then
+			if doorIndex ~= nil then
+				if type(doorIndex) == 'number' then
+					SetVehicleDoorOpen(self.id, doorIndex, loose or false, openInstantly or false)
+				else
+					warning('doorIndex wasn\'t a number!')
+				end
+			else
+				warning('doorIndex was nil!')
+			end
+		end
+	end,
+
+	SetDoorShut = function(self, doorIndex, closeInstantly)
+		if self:Exists() then
+			if doorIndex ~= nil then
+				if type(doorIndex) == 'number' then
+					SetVehicleDoorShut(self.id, doorIndex, closeInstantly or false)
+				else
+					warning('doorIndex wasn\'t a number!')
+				end
+			else
+				warning('doorIndex was nil!')
+			end
+		end
+	end,
 }
 
 setmetatable(Vehicle, VehicleMethods)

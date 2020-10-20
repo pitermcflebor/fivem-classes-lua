@@ -44,11 +44,12 @@ _G.RegisterClientCallback = function(eventName, fn)
 end
 
 _G.ShowHelpNotification = function(msg, thisFrame, beep, duration)
-	AddTextEntry('help_notification', msg)
+	local notify = GetCurrentResourceName()..':notification'
+	AddTextEntry(notify, msg)
 	if thisFrame then
-		DisplayHelpTextThisFrame('help_notification', false)
+		DisplayHelpTextThisFrame(notify, false)
 	else
-		BeginTextCommandDisplayHelp('help_notification')
+		BeginTextCommandDisplayHelp(notify)
 		EndTextCommandDisplayHelp(0, false, beep == nil and true or beep, duration or -1)
 	end
 
@@ -56,15 +57,16 @@ _G.ShowHelpNotification = function(msg, thisFrame, beep, duration)
 end
 
 _G.ShowNotification = function(msg, flash, saveToBrief, hudColorIndex)
-	AddTextEntry(GetCurrentResourceName()..':notification:'..GetGameTimer(), msg)
-	BeginTextCommandThefeedPost('notification')
+	local notify = GetCurrentResourceName()..':notification'
+	AddTextEntry(notify, msg)
+	BeginTextCommandThefeedPost(notify)
 	if hudColorIndex then ThefeedNextPostBackgroundColor(hudColorIndex) end
 	EndTextCommandThefeedPostTicker(flash or false, saveToBrief or true)
 
-	msg, hudColorIndex, flash, saveToBrief = nil, nil, nil, nil
+	msg, hudColorIndex, flash, saveToBrief, notify = nil, nil, nil, nil, nil
 end
 
-TimeoutRequestModel = function(model)
+_G.TimeoutRequestModel = function(model)
 	local _model = (type(model) == 'string' and GetHashKey(model) or model)
 	if HasModelLoaded(_model) then
 		return true
@@ -86,7 +88,7 @@ TimeoutRequestModel = function(model)
 	end
 end
 
-TimeoutRequestAnim = function(animDict)
+_G.TimeoutRequestAnim = function(animDict)
 	if type(animDict) == 'string' then
 		if HasAnimDictLoaded(animDict) then
 			return true
@@ -109,4 +111,29 @@ TimeoutRequestAnim = function(animDict)
 		warning('Tried to TimeoutRequestAnim without string!')
 		return false
 	end
+end
+
+_G.DrawText3D = function(coords, text, size, font)
+	coords = vector3(coords.x, coords.y, coords.z)
+
+	local camCoords = GetGameplayCamCoords()
+	local distance = #(coords - camCoords)
+
+	local scale = ((size or 1) / distance) * 2
+	local fov = (1 / GetGameplayCamFov()) * 100
+	scale = scale * fov
+
+	SetTextScale(0.0 * scale, 0.55 * scale)
+	SetTextFont(font or 0)
+	SetTextColour(255, 255, 255, 255)
+	SetTextDropshadow(0, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(true)
+
+	SetDrawOrigin(coords, 0)
+	BeginTextCommandDisplayText('STRING')
+	AddTextComponentSubstringPlayerName(text)
+	EndTextCommandDisplayText(0.0, 0.0)
+	ClearDrawOrigin()
 end
