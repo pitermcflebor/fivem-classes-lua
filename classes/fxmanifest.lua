@@ -2,8 +2,11 @@ fx_version 'cerulean'
 games { 'gta5' }
 
 developer 'PiterMcFlebor'
-version '1.0'
+version '0.1.6'
 description 'Classes for FiveM with Lua'
+
+disable_version_check 'no'				-- set this to 'yes' if you don't want to check the current version
+disable_version_check_message 'no'		-- set this to 'yes' if you only want to disable the 'is up to date' message log
 
 client_scripts {
 	'misc/client/main.lua',
@@ -26,6 +29,7 @@ client_scripts {
 }
 
 server_scripts {
+	'misc/server/versioncheck.lua',
 	'misc/server/main.lua',
 	'misc/server/callbacks.lua',
 	'misc/server/states.lua',

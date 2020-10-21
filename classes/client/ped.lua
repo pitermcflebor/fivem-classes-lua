@@ -142,7 +142,11 @@ PedMethods.__index = {
 		if self:Exists() then
 			ClearPedTasks(self.id)
 		end
-	end
+	end,
+
+	SetDefaultComponents = function(self)
+		SetPedDefaultComponentVariation(self.id)
+	end,
 }
 
 setmetatable(Ped, PedMethods)
