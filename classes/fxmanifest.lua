@@ -19,7 +19,7 @@ disable_version_check_message 'no'		-- set this to 'yes' if you only want to dis
 client_scripts {
 	'misc/client/main.lua',
 	'misc/client/callbacks.lua',
-	'common/utils.lua',
+	'import.lua',
 	'client/utils.lua',
 	'client/coords.lua',
 	'client/statebag.lua',
@@ -28,6 +28,7 @@ client_scripts {
 	'client/player.lua',
 	'client/marker.lua',
 	'client/prop.lua',
+	'misc/client/common.lua',
 	'misc/client/vehicle_props.lua',
 	'misc/client/states.lua',
 }
@@ -37,7 +38,7 @@ server_scripts {
 	'misc/server/main.lua',
 	'misc/server/callbacks.lua',
 	'misc/server/states.lua',
-	'common/utils.lua',
+	'import.lua',
 	'server/utils.lua',
 	'server/coords.lua',
 	'server/statebag.lua',

@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('vehicle', function()
 	return
 [[_G.Vehicle = {}
@@ -425,3 +426,8 @@ VehicleMethods.__index = {
 
 setmetatable(Vehicle, VehicleMethods)]]
 end)
+else
+	local func, err = load(exports.classes:vehicle())
+	assert(func, err)
+	func()
+end

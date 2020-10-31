@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('player', function()
 	return
 [[_G.CPlayer = {}
@@ -92,3 +93,8 @@ PlayerMethods.__index = {
 
 setmetatable(CPlayer, PlayerMethods)]]
 end)
+else
+	local func, err = load(exports.classes:player())
+	assert(func, err)
+	func()
+end

@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('utils', function()
 	return
 [[_G._type = function(obj)
@@ -242,3 +243,8 @@ _G.GetNearestVehicles = function(coords, radius, sorted)
 	else return table.sorted(t, 'distance') end
 end]]
 end)
+else
+	local func, err = load(exports.classes:utils())
+	assert(func, err)
+	func()
+end

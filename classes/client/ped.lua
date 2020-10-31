@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('ped', function()
 	return
 [[_G.Ped = {}
@@ -129,3 +130,8 @@ PedMethods.__index = {
 
 setmetatable(Ped, PedMethods)]]
 end)
+else
+	local func, err = load(exports.classes:ped())
+	assert(func, err)
+	func()
+end
