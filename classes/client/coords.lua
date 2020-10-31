@@ -1,7 +1,7 @@
 
 exports('coords', function()
 	return
-[[_G.Coords = {}
+[=[_G.Coords = {}
 _G.CoordsMethods = {}
 
 -- methods
@@ -89,7 +89,7 @@ CoordsMethods.__call = function(self, ...)
 			if k == 'xyzw' then
 				return self.x, self.y, self.z, self.w
 			end
-		end, \]\]
+		end, ]]
 		__unpack = function(self)
 			return self.x, self.y, self.z, self.w
 		end,
@@ -146,5 +146,5 @@ CoordsMethods.__call = function(self, ...)
 end
 
 -- class
-setmetatable(Coords, CoordsMethods)]]
+setmetatable(Coords, CoordsMethods)]=]
 end)

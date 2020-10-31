@@ -1,7 +1,7 @@
 
 exports('vehicle', function()
 	return
-[[_G.Vehicle = {}
+[=[_G.Vehicle = {}
 _G.VehicleMethods = {}
 
 VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwork)
@@ -298,7 +298,7 @@ VehicleMethods.__index = {
 		self.props.wheelType 									= self:GetWheelType()
 		-- mods
 		self.props.mods											= TriggerClientCallback(self:GetOwner(), '__classes:vehicle:get:props:mods', self:GetNetId())
-		self.props.extras										= self:GetExtras() \]\]
+		self.props.extras										= self:GetExtras() ]]
 		self.props = TriggerClientCallback(self:GetOwner(), '__classes:vehicle:get:props', self:GetNetId())
 		return self.props
 	end,
@@ -313,5 +313,5 @@ VehicleMethods.__index = {
 
 }
 
-setmetatable(Vehicle, VehicleMethods)]]
+setmetatable(Vehicle, VehicleMethods)]=]
 end)

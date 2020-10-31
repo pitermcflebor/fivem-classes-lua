@@ -2,9 +2,11 @@
 _G.import = function(t)
     if type(t) == 'table' then
         for _,className in pairs(t) do
-            local f = exports.classes[className]()
+			local f = exports.classes[className]()
             assert(f, 'The class '..className..' doesn\'t exists!')
-            load(f)()
+			local func, err = load(f)
+			assert(func, err)
+			func()
         end
     elseif type(t) == 'string' then
         if t == '*' then
