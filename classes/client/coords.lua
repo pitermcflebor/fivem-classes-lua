@@ -1,36 +1,8 @@
 
---
--- Coords - class
---
--- Init: Coords(
---		x --[[ number ]],
---		y --[[ number ]], 
---		z --[[ number ]], 
---		w --[[ number ]]
---	)
--- All parameters are optional
---
--- Example:
---
--- local myCoords = Coords(35.645, 16.234, 76.912)
---
---
--- Coords - methods
---
--- void Coords:UpdateX(x --[[ number ]])
--- void Coords:UpdateY(y --[[ number ]])
--- void Coords:UpdateZ(z --[[ number ]])
--- void Coords:UpdateW(w --[[ number ]])
---
--- Coords - Additonal methods
---
--- local x, y, z, w = table.unpack(myCoords)
--- local x, y, z, w = myCoords.xyzw
--- local x, y = myCoords.xy
---
-
-_G.Coords = {}
-CoordsMethods = {}
+exports('coords', function()
+	return
+[[_G.Coords = {}
+_G.CoordsMethods = {}
 
 -- methods
 CoordsMethods.__index = {
@@ -117,7 +89,7 @@ CoordsMethods.__call = function(self, ...)
 			if k == 'xyzw' then
 				return self.x, self.y, self.z, self.w
 			end
-		end, ]]
+		end, \]\]
 		__unpack = function(self)
 			return self.x, self.y, self.z, self.w
 		end,
@@ -174,4 +146,5 @@ CoordsMethods.__call = function(self, ...)
 end
 
 -- class
-setmetatable(Coords, CoordsMethods)
+setmetatable(Coords, CoordsMethods)]]
+end)

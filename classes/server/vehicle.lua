@@ -1,45 +1,7 @@
 
---[[
-
-Vehicle - Class
-
-Init: Vehicle(
-	newVehicle 	-- boolean,
-	p1 			-- number,
-	x			-- number,
-	y			-- number,
-	z			-- number,
-	heading		-- number,
-	isNetwork	-- boolean
-)
-
-* if newVehicle is true, p1 will be the vehicle model hash
-* if newVehicle is false, p1 will be the vehicle entity id
-
-Vehicle - methods
-
-Vehicle:Exists()
-@return boolean
-
-void Vehicle:Delete() or Vehicle:Remove()
-@raise error if entity not exists
-
-void Vehicle:Freeze([ms])
-@raise error if entity not exists
-
-Vehicle:GetPosition()
-@raise error if entity not exists
-@return Coords object
-
-void Vehicle:SetPedInside(ped[, seat])
-@raise error if entity not exists
-
-void Vehicle:EveryoneLeave()
-@raise error if entity not exists
-
-]]
-
-_G.Vehicle = {}
+exports('vehicle', function()
+	return
+[[_G.Vehicle = {}
 _G.VehicleMethods = {}
 
 VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwork)
@@ -293,15 +255,12 @@ VehicleMethods.__index = {
 	GetBurstTyres = function(self)
 		-- this is awful but easy to read
 		return {
-																		--[[     .____.      ]]
-																		--[[    /      \     ]]
-			{wheelId=0, burst=IsVehicleTyreBurst(self.id, 0, true)},  	--[[  O|       |O    ]] {wheelId=1, burst=IsVehicleTyreBurst(self.id, 1, true)},
-																		--[[   |       |     ]]
-																		--[[   |       |     ]]
-			{wheelId=2, burst=IsVehicleTyreBurst(self.id, 2, true)},	--[[  O|       |O    ]] {wheelId=3, burst=IsVehicleTyreBurst(self.id, 3, true)},
-																		--[[   |       |     ]]
-			{wheelId=4, burst=IsVehicleTyreBurst(self.id, 4, true)},	--[[  O|       |O    ]] {wheelId=5, burst=IsVehicleTyreBurst(self.id, 5, true)},
-																		--[[   \______/      ]]
+			{wheelId=0, burst=IsVehicleTyreBurst(self.id, 0, true)},
+			{wheelId=1, burst=IsVehicleTyreBurst(self.id, 1, true)},
+			{wheelId=2, burst=IsVehicleTyreBurst(self.id, 2, true)},
+			{wheelId=3, burst=IsVehicleTyreBurst(self.id, 3, true)},
+			{wheelId=4, burst=IsVehicleTyreBurst(self.id, 4, true)},
+			{wheelId=5, burst=IsVehicleTyreBurst(self.id, 5, true)},
 		}
 	end,
 
@@ -339,7 +298,7 @@ VehicleMethods.__index = {
 		self.props.wheelType 									= self:GetWheelType()
 		-- mods
 		self.props.mods											= TriggerClientCallback(self:GetOwner(), '__classes:vehicle:get:props:mods', self:GetNetId())
-		self.props.extras										= self:GetExtras() ]]
+		self.props.extras										= self:GetExtras() \]\]
 		self.props = TriggerClientCallback(self:GetOwner(), '__classes:vehicle:get:props', self:GetNetId())
 		return self.props
 	end,
@@ -354,4 +313,5 @@ VehicleMethods.__index = {
 
 }
 
-setmetatable(Vehicle, VehicleMethods)
+setmetatable(Vehicle, VehicleMethods)]]
+end)

@@ -1,4 +1,7 @@
-_G._type = function(obj)
+
+exports('utils', function()
+	return
+[[_G._type = function(obj)
 	if type(obj) == 'table' then
 		local meta = getmetatable(obj)
 		if meta ~= nil then
@@ -43,4 +46,5 @@ _G.TriggerClientCallback = function(src, eventName, ...)
 	local result = Citizen.Await(p)
 	RemoveEventHandler(e)
 	return table.unpack(result)
-end
+end]]
+end)

@@ -1,52 +1,7 @@
 
---[[
-
-Vehicle - Class
-
-Init: Vehicle(
-	newVehicle 	-- boolean,
-	p1 			-- number,
-	x			-- number,
-	y			-- number,
-	z			-- number,
-	heading		-- number,
-	isNetwork	-- boolean
-)
-
-* if newVehicle is true, p1 will be the vehicle model hash
-* if newVehicle is false, p1 will be the vehicle entity id
-
-Vehicle - methods
-
-Vehicle:Exists()
-Vehicle:SetPedInside(ped, seat)
-Vehicle:GetMods()
-Vehicle:GetColours()
-Vehicle:GetDashboardColour()
-Vehicle:GetInteriorColour()
-Vehicle:GetExtraColours()
-Vehicle:GetHeadlightsColour()
-Vehicle:GetNumberPlateTextIndex()
-Vehicle:GetTyreSmokeColor()
-Vehicle:GetWindowTint()
-Vehicle:GetBodyHealth()
-Vehicle:GetDirtLevel()
-Vehicle:GetEngineHealth()
-Vehicle:GetPetrolTankHealth()
-Vehicle:GetLivery()
-Vehicle:GetNumberPlateText()
-Vehicle:GetRoofLivery()
-Vehicle:GetWheelType()
-Vehicle:GetExtras()
-Vehicle:GetBurstTyres()
-Vehicle:GetFuelLevel()
-Vehicle:GetBrokenWindows()
-Vehicle:GetProperties()
-Vehicle:SetProperties(props)
-
-]]
-
-_G.Vehicle = {}
+exports('vehicle', function()
+	return
+[[_G.Vehicle = {}
 _G.VehicleMethods = {}
 
 VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwork)
@@ -131,7 +86,11 @@ VehicleMethods.__index = {
 					TaskWarpPedIntoVehicle(ped.id, self.id, seat)
 					return true
 				end
+			else
+				warning('Ped parameter wasn\'t any number or Ped')
 			end
+		else
+			warning('Vehicle doesn\'t exists!')
 		end
 		return false
 	end,
@@ -304,15 +263,9 @@ VehicleMethods.__index = {
 	GetBurstTyres = function(self)
 		-- this is awful but easy to read
 		return {
-																				--[[     .____.      ]]
-																				--[[    /      \     ]]
-			{wheelId=0, burst=(IsVehicleTyreBurst(self.id, 0, false) == 1)},  	--[[  O|       |O    ]] {wheelId=1, burst=IsVehicleTyreBurst(self.id, 1, false) == 1},
-																				--[[   |       |     ]]
-																				--[[   |       |     ]]
-			{wheelId=2, burst=IsVehicleTyreBurst(self.id, 2, false) == 1},		--[[  O|       |O    ]] {wheelId=3, burst=IsVehicleTyreBurst(self.id, 3, false) == 1},
-																				--[[   |       |     ]]
-			{wheelId=4, burst=IsVehicleTyreBurst(self.id, 4, false) == 1},		--[[  O|       |O    ]] {wheelId=5, burst=IsVehicleTyreBurst(self.id, 5, false) == 1},
-																				--[[   \______/      ]]
+			{wheelId=0, burst=IsVehicleTyreBurst(self.id, 0, false) == 1}, 	{wheelId=1, burst=IsVehicleTyreBurst(self.id, 1, false) == 1},
+			{wheelId=2, burst=IsVehicleTyreBurst(self.id, 2, false) == 1},	{wheelId=3, burst=IsVehicleTyreBurst(self.id, 3, false) == 1},
+			{wheelId=4, burst=IsVehicleTyreBurst(self.id, 4, false) == 1},	{wheelId=5, burst=IsVehicleTyreBurst(self.id, 5, false) == 1},
 		}
 	end,
 
@@ -470,4 +423,5 @@ VehicleMethods.__index = {
 	end,
 }
 
-setmetatable(Vehicle, VehicleMethods)
+setmetatable(Vehicle, VehicleMethods)]]
+end)

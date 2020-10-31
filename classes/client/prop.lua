@@ -1,5 +1,7 @@
 
-_G.Prop = {}
+exports('prop', function()
+	return
+[[_G.Prop = {}
 _G.PropMethods = {}
 
 PropMethods.__call = function(self, newProp, p1, coords, isNetwork, freezeOnSpawn)
@@ -122,4 +124,5 @@ PropMethods.__index = {
 	end,
 }
 
-setmetatable(Prop, PropMethods)
+setmetatable(Prop, PropMethods)]]
+end)

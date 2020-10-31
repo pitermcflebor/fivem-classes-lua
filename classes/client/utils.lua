@@ -1,5 +1,7 @@
 
-_G._type = function(obj)
+exports('utils', function()
+	return
+[[_G._type = function(obj)
 	if type(obj) == 'table' then
 		local meta = getmetatable(obj)
 		if meta ~= nil then
@@ -137,3 +139,106 @@ _G.DrawText3D = function(coords, text, size, font)
 	EndTextCommandDisplayText(0.0, 0.0)
 	ClearDrawOrigin()
 end
+
+_G.dist = function(v1, v2, useZ)
+	if type(v1) ~= 'vector3' or type(v2) ~= 'vector3' then
+		error"The parameters passed are not vector3!"
+	end
+	if useZ then
+		return #(v1 - v2)
+	else
+		return #(v1.xy - v2.xy)
+	end
+end
+
+_G.GetNearestPeds = function(coords, radius, sorted, selfped)
+	coords = coords or GetEntityCoords(PlayerPedId())
+	local t = {}
+	if radius == nil then
+		for _,e in pairs(GetGamePool('CPed')) do
+			if not selfped and e == PlayerPedId() then --nothing
+			else
+				table.insert(t, {index=e, distance=dist(GetEntityCoords(e), coords)})
+			end
+		end
+	else
+		assert(type(radius) == 'number', 'Radius wasn\'t a number!')
+		assert(type(coords) == 'vector3', 'Coords wasn\'t a Vector3!')
+		for _,e in pairs(GetGamePool('CPed')) do
+			local d = dist(GetEntityCoords(e), coords)
+			if d <= radius then
+				if not selfped and e == PlayerPedId() then --nothing
+				else
+					table.insert(t, {index=e, distance=d})
+				end
+			end
+		end
+	end
+	if not sorted then return t
+	else return table.sorted(t, 'distance') end
+end
+
+_G.GetNearestPlayers = function(coords, radius, sorted, selfplayer)
+	coords = coords or GetEntityCoords(PlayerPedId())
+	local t = {}
+	if radius == nil then
+		for _,e in pairs(GetNearestPeds(coords, nil, false, selfplayer)) do
+			if IsPedAPlayer(e.index) then
+				table.insert(t, {index=GetPlayerServerId(NetworkGetPlayerIndexFromPed(e.index)), distance=e.distance})
+			end
+		end
+	else
+		for _,e in pairs(GetNearestPeds(coords, radius, false, selfplayer)) do
+			if IsPedAPlayer(e.index) then
+				if e.distance <= radius then
+					table.insert(t, {index=GetPlayerServerId(NetworkGetPlayerIndexFromPed(e.index)), distance=e.distance})
+				end
+			end
+		end
+	end
+	if not sorted then return t
+	else return table.sorted(t, 'distance') end
+end
+
+_G.GetNearestObjects = function(coords, radius, sorted)
+	coords = coords or GetEntityCoords(PlayerPedId())
+	local t = {}
+	if radius == nil then
+		for _,e in pairs(GetGamePool('CObject')) do
+			table.insert(t, {index=e, distance=dist(GetEntityCoords(e), coords)})
+		end
+	else
+		assert(type(radius) == 'number', 'Radius wasn\'t a number!')
+		assert(type(coords) == 'vector3', 'Coords wasn\'t a Vector3!')
+		for _,e in pairs(GetGamePool('CObject')) do
+			local d = dist(GetEntityCoords(e), coords)
+			if d <= radius then
+				table.insert(t, {index=e, distance=d})
+			end
+		end
+	end
+	if not sorted then return t
+	else return table.sorted(t, 'distance') end
+end
+
+_G.GetNearestVehicles = function(coords, radius, sorted)
+	coords = coords or GetEntityCoords(PlayerPedId())
+	local t = {}
+	if radius == nil then
+		for _,e in pairs(GetGamePool('CVehicle')) do
+			table.insert(t, {index=e, distance=dist(GetEntityCoords(e), coords)})
+		end
+	else
+		assert(type(radius) == 'number', 'Radius wasn\'t a number!')
+		assert(type(coords) == 'vector3', 'Coords wasn\'t a Vector3!')
+		for _,e in pairs(GetGamePool('CVehicle')) do
+			local d = dist(GetEntityCoords(e), coords)
+			if d <= radius then
+				table.insert(t, {index=e, distance=d})
+			end
+		end
+	end
+	if not sorted then return t
+	else return table.sorted(t, 'distance') end
+end]]
+end)

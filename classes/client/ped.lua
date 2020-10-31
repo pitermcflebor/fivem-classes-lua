@@ -1,33 +1,7 @@
 
---[[
-
-Ped - Class
-
-Init: Ped(
-	newPed		-- boolean,
-	p1			-- string/number,
-	pedType		-- number [0-29],
-	x			-- number,
-	y			-- number,
-	z			-- number,
-	heading		-- number,
-	isNetwork	-- boolean,
-)
-
-* if newPed is true, p1 will be a string or number with the ped model
-* if newPed is false, p1 will be a number with the ped entity id
-
-Ped - methods
-
-Ped:Exists()
-@return boolean
-
-Ped:GetPosition()
-@return Coords object
-
-]]
-
-_G.Ped = {}
+exports('ped', function()
+	return
+[[_G.Ped = {}
 _G.PedMethods = {}
 
 PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
@@ -49,11 +23,15 @@ PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
 			if type(x) ~= 'number' or type(y) ~= 'number' or type(z) ~= 'number' or type(w) ~= 'number' then
 				assert(nil, 'The X, Y, Z or Heading expected number')
 			end
-			if type(isNetwork) == 'boolean' then
+			if type(isNetwork) ~= 'boolean' then
 				assert(nil, 'The isNetwork expected boolean, but got '..type(isNetwork))
 			end
-			if type(p1) == 'string' then o.modelName = p1 end
-			o.model = GetHashKey(p1)
+			if type(p1) == 'string' then
+				o.modelName = p1
+				o.model = GetHashKey(p1)
+			else
+				o.model = p1
+			end
 			o.id = CreatePed(pedType, o.model, x, y, z, w, isNetwork, true)
 		else
 			assert(nil, 'The second parameter expected number, but got '..type(p1))
@@ -80,7 +58,7 @@ PedMethods.__index = {
 	Exists = function(self)
 		return (DoesEntityExist(self.id) == 1 and true or false)
 	end,
-	
+
 	GetPosition = function(self)
 		if not self:Exists() then
 			warning('The Ped doesn\'t exists!')
@@ -149,4 +127,5 @@ PedMethods.__index = {
 	end,
 }
 
-setmetatable(Ped, PedMethods)
+setmetatable(Ped, PedMethods)]]
+end)

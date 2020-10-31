@@ -1,26 +1,7 @@
 
---[[
-
-Player - Class
-
-Init: Player(
-	source		-- number,
-)
-
-* source can be -1 or any number greater than 0
-* -1 returns self player
-
-Player - methods
-
-Player:GetPosition()
-@return Coords object
-
-Player:GetName()
-@return boolean
-
-]]
-
-_G.CPlayer = {}
+exports('player', function()
+	return
+[[_G.CPlayer = {}
 _G.PlayerMethods = {}
 
 PlayerMethods.__call = function(self, source)
@@ -109,4 +90,5 @@ PlayerMethods.__index = {
 	end
 }
 
-setmetatable(CPlayer, PlayerMethods)
+setmetatable(CPlayer, PlayerMethods)]]
+end)

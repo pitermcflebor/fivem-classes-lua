@@ -1,13 +1,7 @@
---[[
 
-StateBag - Class
-
-Init
-StateBag(entityId)
-@entityId - the locally entity id
-
-]]
-_G.StateBag = {}
+exports('statebag', function()
+	return
+[[_G.StateBag = {}
 _G.StateBagMethods = {}
 
 
@@ -97,4 +91,5 @@ StateBagMethods.__index = {
 }
 
 
-setmetatable(StateBag, StateBagMethods)
+setmetatable(StateBag, StateBagMethods)]]
+end)

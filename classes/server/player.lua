@@ -1,28 +1,7 @@
 
---[[
-
-Player - Class
-
-Init: CPlayer(
-	source		-- number
-)
-
-Player - methods
-
-CPlayer:GetPosition()
-@return Coords object
-
-CPlayer:IsInVehicle()
-@return boolean
-
-CPlayer:GetVehicleSitting()
-@return Vehicle object
-
-CPlayer:GetLastVehicle()
-@return Vehicle object
-
-]]
-
+exports('player', function()
+	return
+[[
 _G.CPlayer = {}
 _G.PlayerMethods = {}
 
@@ -48,7 +27,7 @@ PlayerMethods.__call = function(self, source)
 		o.identifiers = {}
 		for _,identifier in pairs(identifiers) do
 			local splitted = table.build(identifier:split(':'))
-			o.identifiers[splitted[1]] = identifier
+			o.identifiers[splitted[1\]\] = identifier
 		end
 	else
 		assert(nil, 'Source expected number, but got '..type(source))
@@ -85,4 +64,5 @@ PlayerMethods.__index = {
 	end,
 }
 
-setmetatable(CPlayer, PlayerMethods)
+setmetatable(CPlayer, PlayerMethods)]]
+end)
