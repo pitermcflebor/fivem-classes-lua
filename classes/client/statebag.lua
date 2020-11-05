@@ -6,15 +6,19 @@ exports('statebag', function()
 _G.StateBagMethods = {}
 
 
-StateBagMethods.__call = function(self, entityId)
+StateBagMethods.__call = function(self, entityId, isPlayer)
 	if type(entityId) == 'number' then
 		local o = setmetatable({}, {__index = self})
-		o.localId = entityId
-		o.networked = NetworkGetEntityIsNetworked(entityId)
-		if o.networked then
-			o.id = NetworkGetNetworkIdFromEntity(entityId)
-		else
+		if isPlayer ~= nil and isPlayer == true then
 			o.id = entityId
+		else
+			o.localId = entityId
+			o.networked = NetworkGetEntityIsNetworked(entityId)
+			if o.networked then
+				o.id = NetworkGetNetworkIdFromEntity(entityId)
+			else
+				o.id = entityId
+			end
 		end
 		return o
 	else

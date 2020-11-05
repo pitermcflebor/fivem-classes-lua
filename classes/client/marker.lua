@@ -62,15 +62,18 @@ MarkerMethods.__index = {
 	Inside = function(self, cb)
 		self.threadWorking = true
 		self.inside = false
+		self.threadWorkingTime = 0
 		Citizen.CreateThreadNow(function()
 			while self.threadWorking do
 				if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) <= self.radius*1.5 then
 					if not self.inside then self.inside = true end
 					cb(self)
+					self.threadWorkingTime = 0
 				else
 					if self.inside then collectgarbage("collect") end
+					self.threadWorkingTime = 100
 				end
-				Wait(0)
+				Wait(self.threadWorkingTime)
 			end
 		end)
 	end,
@@ -82,7 +85,7 @@ MarkerMethods.__index = {
 				if Vdist2(self.coords.x, self.coords.y, self.coords.z, GetEntityCoords(PlayerPedId())) > self.radius*1.5 then
 					cb(self)
 				end
-				Wait(0)
+				Wait(self.threadWorkingTime)
 			end
 		end)
 	end

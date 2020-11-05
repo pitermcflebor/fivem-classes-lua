@@ -2,7 +2,7 @@ fx_version 'cerulean'
 games { 'gta5' }
 
 developer 'PiterMcFlebor'
-version '0.2.0'
+version '0.2.2'
 description [[
 
 Classes script created by PiterMcFlebor (2020)

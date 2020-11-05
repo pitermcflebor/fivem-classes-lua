@@ -31,7 +31,10 @@ PlayerMethods.__call = function(self, source)
 	else
 		warning('The paremeter need to be number, but got '..type(source))
 	end
-	o.state = o.ped.state
+	if not StateBag then
+		import 'statebag'
+	end
+	o.state = StateBag(o.source, true)
 	return o
 end
 
