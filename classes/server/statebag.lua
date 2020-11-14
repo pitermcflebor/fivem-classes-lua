@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('statebag', function()
 	return
 [[_G.StateBag = {}
@@ -93,3 +94,8 @@ StateBagMethods.__index = {
 
 setmetatable(StateBag, StateBagMethods)]]
 end)
+else
+	local func, err = load(exports.classes:statebag())
+	assert(func, err)
+	func()
+end

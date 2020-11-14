@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('coords', function()
 	return
 [[
@@ -118,3 +119,8 @@ exports('coords', function()
 	setmetatable(Coords, CoordsMethods)
 ]]
 end)
+else
+	local func, err = load(exports.classes:coords())
+	assert(func, err)
+	func()
+end

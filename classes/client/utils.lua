@@ -2,7 +2,7 @@
 if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('utils', function()
 	return
-[[_G._type = function(obj)
+[=[_G._type = function(obj)
 	if type(obj) == 'table' then
 		local meta = getmetatable(obj)
 		if meta ~= nil then
@@ -241,7 +241,7 @@ _G.GetNearestVehicles = function(coords, radius, sorted)
 	end
 	if not sorted then return t
 	else return table.sorted(t, 'distance') end
-end]]
+end]=]
 end)
 else
 	local func, err = load(exports.classes:utils())

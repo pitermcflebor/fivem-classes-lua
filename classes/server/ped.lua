@@ -1,7 +1,8 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('ped', function()
 	return
-[[
+[=[
 	_G.Ped = {}
 	_G.PedMethods = {}
 	
@@ -125,5 +126,10 @@ exports('ped', function()
 	}
 	
 	setmetatable(Ped, PedMethods)
-]]
+]=]
 end)
+else
+	local func, err = load(exports.classes:ped())
+	assert(func, err)
+	func()
+end

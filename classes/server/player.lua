@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('player', function()
 	return
 [=[
@@ -66,3 +67,8 @@ PlayerMethods.__index = {
 
 setmetatable(CPlayer, PlayerMethods)]=]
 end)
+else
+	local func, err = load(exports.classes:player())
+	assert(func, err)
+	func()
+end

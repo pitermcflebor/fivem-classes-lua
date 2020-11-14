@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('utils', function()
 	return
 [[_G._type = function(obj)
@@ -48,3 +49,8 @@ _G.TriggerClientCallback = function(src, eventName, ...)
 	return table.unpack(result)
 end]]
 end)
+else
+	local func, err = load(exports.classes:utils())
+	assert(func, err)
+	func()
+end

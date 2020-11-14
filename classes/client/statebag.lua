@@ -2,7 +2,7 @@
 if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('statebag', function()
 	return
-[[_G.StateBag = {}
+[=[_G.StateBag = {}
 _G.StateBagMethods = {}
 
 
@@ -68,7 +68,7 @@ StateBagMethods.__index = {
 }
 
 
-setmetatable(StateBag, StateBagMethods)]]
+setmetatable(StateBag, StateBagMethods)]=]
 end)
 else
 	local func, err = load(exports.classes:statebag())

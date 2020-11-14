@@ -2,7 +2,7 @@
 if GetCurrentResourceName() == 'classes' then -- fix for older versions
 exports('vehicle', function()
 	return
-[[_G.Vehicle = {}
+[=[_G.Vehicle = {}
 _G.VehicleMethods = {}
 
 VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwork)
@@ -424,7 +424,7 @@ VehicleMethods.__index = {
 	end,
 }
 
-setmetatable(Vehicle, VehicleMethods)]]
+setmetatable(Vehicle, VehicleMethods)]=]
 end)
 else
 	local func, err = load(exports.classes:vehicle())

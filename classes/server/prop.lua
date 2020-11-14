@@ -1,4 +1,5 @@
 
+if GetCurrentResourceName() == 'classes' then
 exports('prop', function()
 	return
 [[_G.Prop = {}
@@ -142,3 +143,8 @@ PropMethods.__index = {
 
 setmetatable(Prop, PropMethods)]]
 end)
+else
+	local func, err = load(exports.classes:prop())
+	assert(func, err)
+	func()
+end
