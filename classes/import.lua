@@ -2,11 +2,11 @@
 _G.import = function(t)
     if type(t) == 'table' then
         for _,className in pairs(t) do
-			local f = exports.classes[className]()
-            assert(f, 'The class '..className..' doesn\'t exists!')
-			local func, err = load(f)
-			assert(func, err)
-			func()
+			local rawLua = LoadResourceFile('classes', ("%s/%s.lua"):format((IsDuplicityVersion() and 'server' or 'client'), className))
+			assert(rawLua, 'Cannot import '..className)
+			local f, err = load(rawLua)
+			assert(f, err)
+			f()
         end
     elseif type(t) == 'string' then
         if t == '*' then

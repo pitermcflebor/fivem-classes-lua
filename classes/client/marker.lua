@@ -1,8 +1,5 @@
 
-if GetCurrentResourceName() == 'classes' then -- fix for older versions
-exports('marker', function()
-	return
-[=[_G.Marker = {}
+_G.Marker = {}
 _G.MarkerMethods = {}
 
 -- init
@@ -92,10 +89,4 @@ MarkerMethods.__index = {
 }
 
 -- class
-setmetatable(Marker, MarkerMethods)]=]
-end)
-else
-	local func, err = load(exports.classes:marker())
-	assert(func, err)
-	func()
-end
+setmetatable(Marker, MarkerMethods)

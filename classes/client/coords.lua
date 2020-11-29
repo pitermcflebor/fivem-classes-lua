@@ -1,8 +1,5 @@
 
-if GetCurrentResourceName() == 'classes' then -- fix for older versions
-exports('coords', function()
-	return
-[=[_G.Coords = {}
+_G.Coords = {}
 _G.CoordsMethods = {}
 
 -- methods
@@ -147,10 +144,4 @@ CoordsMethods.__call = function(self, ...)
 end
 
 -- class
-setmetatable(Coords, CoordsMethods)]=]
-end)
-else
-	local func, err = load(exports.classes:coords())
-	assert(func, err)
-	func()
-end
+setmetatable(Coords, CoordsMethods)

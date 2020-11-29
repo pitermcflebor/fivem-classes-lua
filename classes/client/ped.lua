@@ -1,8 +1,5 @@
 
-if GetCurrentResourceName() == 'classes' then -- fix for older versions
-exports('ped', function()
-	return
-[=[_G.Ped = {}
+_G.Ped = {}
 _G.PedMethods = {}
 
 PedMethods.__call = function(self, newPed, p1, pedType, x,y,z,w, isNetwork)
@@ -128,10 +125,4 @@ PedMethods.__index = {
 	end,
 }
 
-setmetatable(Ped, PedMethods)]=]
-end)
-else
-	local func, err = load(exports.classes:ped())
-	assert(func, err)
-	func()
-end
+setmetatable(Ped, PedMethods)

@@ -1,8 +1,5 @@
 
-if GetCurrentResourceName() == 'classes' then
-exports('vehicle', function()
-	return
-[=[_G.Vehicle = {}
+_G.Vehicle = {}
 _G.VehicleMethods = {}
 
 VehicleMethods.__call = function(self, newVehicle, p1, x, y, z, heading, isNetwork)
@@ -314,10 +311,4 @@ VehicleMethods.__index = {
 
 }
 
-setmetatable(Vehicle, VehicleMethods)]=]
-end)
-else
-	local func, err = load(exports.classes:vehicle())
-	assert(func, err)
-	func()
-end
+setmetatable(Vehicle, VehicleMethods)
